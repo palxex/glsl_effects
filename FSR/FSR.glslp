@@ -1,0 +1,14 @@
+shaders = 2
+
+shader0 = shaders/EASU.glsl
+filter_linear0 = true
+scale_type0 = viewport
+scale0 = 1.0
+
+shader1 = shaders/RCAS.glsl
+filter_linear1 = true
+scale_type1 = source
+scale1 = 1.0
+
+parameters = "FSR_SHARPENING"
+FSR_SHARPENING = 0.2
