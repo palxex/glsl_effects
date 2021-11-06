@@ -81,10 +81,7 @@ uniform sampler2D tex0;
 
 void main() {
 	vec3 err={0,0,0};
-	vec2 sp = floor(v_texCoord * TextureSize);
-	//sp.x*=1.28;
-	//sp.y*=1.707;
-	//err=vec3(sp.x/255.0,sp.y/255.0,0);
+	vec2 sp = floor(v_texCoord * OutputSize);
 
 	// Algorithm uses minimal 3x3 pixel neighborhood.
 	//    b 
@@ -164,6 +161,5 @@ void main() {
 	FragColor = vec4(c, 1.0f);
 	if( err.r != 0 || err.g != 0 || err.b != 0 )
 		FragColor=vec4(err,1);
-	//FragColor = vec4(COMPAT_TEXTURE(tex0 , v_texCoord.xy).rgb, 1.0f);
 }
 #endif
