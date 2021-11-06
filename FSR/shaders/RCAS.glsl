@@ -78,6 +78,7 @@ uniform sampler2D tex0;
 #define FSR_RCAS_LIMIT (0.25-(1.0/16.0))
 
 #define saturate(x) clamp(x,0,1)
+inline float rcp(float x) { return 1.0/x; }
 
 void main() {
 	vec3 err={0,0,0};
