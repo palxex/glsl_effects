@@ -78,10 +78,10 @@ uniform sampler2D tex0;
 #define FSR_RCAS_LIMIT (0.25-(1.0/16.0))
 
 #define saturate(x) clamp(x,0,1)
-inline float rcp(float x) { return 1.0/x; }
+float rcp(float x) { return 1.0/x; }
 
 void main() {
-	vec3 err={0,0,0};
+	vec3 err=vec3(0,0,0);
 	vec2 sp = floor(v_texCoord * OutputSize);
 
 	// Algorithm uses minimal 3x3 pixel neighborhood.
@@ -135,7 +135,7 @@ void main() {
 	float mx4G = max(max3(bG, dG, fG), hG);
 	float mx4B = max(max3(bB, dB, fB), hB);
 	// Immediate constants for peak range.
-	vec2 peakC = { 1.0, -1.0 * 4.0 };
+	vec2 peakC = vec2( 1.0, -1.0 * 4.0 );
 	// Limiters, these need to be high precision RCPs.
 	float hitMinR = mn4R * rcp(4.0 * mx4R);
 	float hitMinG = mn4G * rcp(4.0 * mx4G);
@@ -153,11 +153,11 @@ void main() {
 
 	// Resolve, which needs the medium precision rcp approximation to avoid visible tonality changes.
 	float rcpL = rcp(4.0 * lobe + 1.0);
-	vec3 c = {
+	vec3 c = vec3(
 		(lobe * bR + lobe * dR + lobe * hR + lobe * fR + eR) * rcpL,
 		(lobe * bG + lobe * dG + lobe * hG + lobe * fG + eG) * rcpL,
 		(lobe * bB + lobe * dB + lobe * hB + lobe * fB + eB) * rcpL
-	};
+	);
 
 	FragColor = vec4(c, 1.0f);
 	if( err.r != 0 || err.g != 0 || err.b != 0 )

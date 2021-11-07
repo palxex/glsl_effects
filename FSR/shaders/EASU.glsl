@@ -55,6 +55,7 @@ precision mediump float;
 
 #define saturate(x) clamp(x,0,1)
 #define rsqrt inversesqrt
+float rcp(float x) { return 1.0/x; }
 
 uniform COMPAT_PRECISION int FrameDirection;
 uniform COMPAT_PRECISION int FrameCount;
@@ -220,7 +221,7 @@ void main() {
 	float oL = zzonL.z;
 	float nL = zzonL.w;
 	// Accumulate for bilinear interpolation.
-	vec2 dir = {0, 0};
+	vec2 dir = vec2(0, 0);
 	float len = 0;
 	FsrEasuSet(dir, len, pp, true, false, false, false, bL, eL, fL, gL, jL);
 	FsrEasuSet(dir, len, pp, false, true, false, false, cL, fL, gL, hL, kL);
@@ -243,7 +244,7 @@ void main() {
 	// Anisotropic length after rotation,
 	//  x := 1.0 lerp to 'stretch' on edges
 	//  y := 1.0 lerp to 2x on edges
-	vec2 len2 = { 1 + (stretch - 1) * len, 1 - 0.5 * len };
+	vec2 len2 = vec2( 1 + (stretch - 1) * len, 1 - 0.5 * len );
 	// Based on the amount of 'edge',
 	// the window shifts from +/-{sqrt(2.0) to slightly beyond 2.0}.
 	float lob = 0.5 + ((1.0 / 4.0 - 0.04) - 0.5) * len;
@@ -260,7 +261,7 @@ void main() {
 	vec3 max4 = max(max3(vec3(ijfeR.z, ijfeG.z, ijfeB.z), vec3(klhgR.w, klhgG.w, klhgB.w), vec3(ijfeR.y, ijfeG.y, ijfeB.y)),
 		vec3(klhgR.x, klhgG.x, klhgB.x));
 	// Accumulation.
-	vec3 aC = {0,0,0};
+	vec3 aC = vec3(0,0,0);
 	float aW = 0;
 	FsrEasuTap(aC, aW, vec2(0.0, -1.0) - pp, dir, len2, lob, clp, vec3(bczzR.x, bczzG.x, bczzB.x)); // b
 	FsrEasuTap(aC, aW, vec2(1.0, -1.0) - pp, dir, len2, lob, clp, vec3(bczzR.y, bczzG.y, bczzB.y)); // c
