@@ -1,0 +1,14 @@
+shaders = 2
+
+shader0 = ../FSR/shaders/EASU.glsl
+filter_linear0 = true
+scale_type0 = viewport
+scale0 = 1.0
+
+shader1 = shaders/NVSharpen.glsl
+filter_linear1 = true
+scale_type1 = source
+scale1 = 1.0
+
+parameters = "NIS_SHARPENING"
+NIS_SHARPENING = 0.2
